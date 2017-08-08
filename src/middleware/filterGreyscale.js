@@ -11,12 +11,25 @@
   limitations under the License.
 */
 
-module.exports = (req, res) => {
-  const renderHomepage = ctx => res.render('index', ctx);
+module.exports = (req, res, next) => {
+  req.app.locals.jimp.read(res.locals.image.buffer, (err, image) => {
+    if (err) {
+      return res.redirect(`/?err=${JSON.stringify({
+        code: err.code,
+        message: err.message,
+      })}`);
+    }
 
-  if (req.query && req.query.err) {
-    return renderHomepage({ err: req.query.err });
-  }
+    image.greyscale().getBuffer(req.app.locals.jimp.AUTO, (bufferErr, buffer) => {
+      if (bufferErr) {
+        return res.redirect(`/?err=${JSON.stringify({
+          code: err.code,
+          message: err.message,
+        })}`);
+      }
 
-  renderHomepage();
+      res.locals.editedImage = buffer;
+      return next();
+    });
+  });
 };

@@ -12,11 +12,15 @@
 */
 
 module.exports = (req, res) => {
-  const renderHomepage = ctx => res.render('index', ctx);
+  const filename = `${req.app.locals.uploadDir}/${res.locals.image.name}`;
+  req.app.locals.fs.writeFile(filename, res.locals.editedImage, (err) => {
+    if (err) {
+      return res.redirect(`/?err=${JSON.stringify({
+        code: err.code,
+        message: err.message,
+      })}`);
+    }
 
-  if (req.query && req.query.err) {
-    return renderHomepage({ err: req.query.err });
-  }
-
-  renderHomepage();
+    res.redirect('/');
+  });
 };
