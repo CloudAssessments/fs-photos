@@ -23,8 +23,8 @@ module.exports = (req, res, next) => {
     image.greyscale().getBuffer(req.app.locals.jimp.AUTO, (bufferErr, buffer) => {
       if (bufferErr) {
         return res.redirect(`/?err=${JSON.stringify({
-          code: err.code,
-          message: err.message,
+          code: bufferErr.code,
+          message: bufferErr.message,
         })}`);
       }
 
