@@ -12,22 +12,13 @@
 */
 
 module.exports = (req, res) => {
-  const renderHomepage = ctx => res.render('index', Object.assign(
-    { images: res.locals.images },
-    ctx
-  ));
+  const path = `${req.app.locals.uploadDir}/${req.params.image}`;
+  req.app.locals.fs.readFile(path, (err, data) => {
+    if (err) {
+      return res.status(404).send();
+    }
 
-
-  if (req.query && req.query.err) {
-    return renderHomepage({ err: req.query.err });
-  }
-
-  if (res.locals.error) {
-    return renderHomepage({ err: JSON.stringify({
-      code: res.locals.error.code,
-      message: res.locals.error.message,
-    }) });
-  }
-
-  renderHomepage();
+    res.writeHead(200);
+    res.end(data, 'binary');
+  });
 };

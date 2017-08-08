@@ -35,7 +35,11 @@ app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes: Homepage
-app.get('/', require('./middleware/homepage'));
+app.get(
+  '/',
+  require('./middleware/getImages'),
+  require('./middleware/homepage')
+);
 
 // Routes: Upload Image
 app.post(
@@ -44,6 +48,11 @@ app.post(
   require('./middleware/multipartToImage'),
   require('./middleware/filterGreyscale'),
   require('./middleware/upload')
+);
+
+app.get(
+  `/${app.locals.uploadDir}/:image`,
+  require('./middleware/getImage.js')
 );
 
 // Routes: Debug - Show Environment and App Variables
