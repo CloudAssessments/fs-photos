@@ -12,7 +12,10 @@
 */
 
 const express = require('express');
+const fs = require('fs');
+const jimp = require('jimp');
 const logger = require('morgan');
+const multer = require('multer');
 const path = require('path');
 
 const app = express();
@@ -21,10 +24,37 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+app.locals = {
+  fs,
+  jimp,
+  multer,
+  uploadDir: process.env.UPLOAD_DIR || 'uploads',
+};
+
 app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes: Homepage
 app.get('/', require('./middleware/homepage'));
+
+// Routes: Upload Image
+app.post(
+  '/photo',
+  multer().single('uploadedImage'),
+  require('./middleware/multipartToImage'),
+  require('./middleware/filterGreyscale'),
+  require('./middleware/upload')
+);
+
+// Routes: Debug - Show Environment and App Variables
+app.get('/debug/app-vars', (req, res) => res.json({
+  ENV_VARS: {
+    PORT: process.env.PORT,
+    UPLOAD_DIR: process.env.UPLOAD_DIR,
+  },
+  APP_LOCALS: {
+    uploadDir: app.locals.uploadDir,
+  },
+}));
 
 module.exports = app;
