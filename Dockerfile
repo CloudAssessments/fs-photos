@@ -5,6 +5,7 @@ RUN apt-get update && apt-get install -y ca-certificates git-core ssh
 
 # Our source
 RUN mkdir /app
+RUN mkdir /app/uploads
 WORKDIR /app
 ADD . /app
 

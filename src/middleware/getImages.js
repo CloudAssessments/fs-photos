@@ -11,23 +11,19 @@
   limitations under the License.
 */
 
-module.exports = (req, res) => {
-  const renderHomepage = ctx => res.render('index', Object.assign(
-    { images: res.locals.images },
-    ctx
-  ));
+module.exports = (req, res, next) => {
+  req.app.locals.fs.readdir(req.app.locals.uploadDir, (err, files) => {
+    if (err) {
+      res.locals.error = err;
+      return next();
+    }
 
+    const imageNames = files.filter(file => file.match(/\w(.+)(.bmp|.jpe?g|.png)$/));
 
-  if (req.query && req.query.err) {
-    return renderHomepage({ err: req.query.err });
-  }
+    res.locals.images = imageNames.map(
+      imageName => `${req.app.locals.uploadDir}/${imageName}`
+    ).splice(0, 12);
 
-  if (res.locals.error) {
-    return renderHomepage({ err: JSON.stringify({
-      code: res.locals.error.code,
-      message: res.locals.error.message,
-    }) });
-  }
-
-  renderHomepage();
+    next();
+  });
 };
