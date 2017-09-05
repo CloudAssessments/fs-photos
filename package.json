@@ -9,6 +9,7 @@
   "scripts": {
     "clean": "rm -rf coverage .nyc_output node_modules",
     "dev": "STORAGE_PORT=3001 FILTER_PORT=3002 nodemon ./src/bin/www",
+    "empty-uploads": "node ./src/scripts/emptyImagesInUploadDir.js",
     "lint": "eslint",
     "prod": "node ./src/bin/www",
     "test": "nyc -r text -r html ava -T 300000 'test'"

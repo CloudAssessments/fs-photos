@@ -37,3 +37,9 @@ A single-project demo to enable users to get and upload photos to their local fi
 
 ### Debugging Endpoint
 Navigate to `localhost:3000/debug/app-vars` to view relevant environment and app variables used in the web-app during runtime
+
+## Scripts
+### Emptying Images from Upload Directory
+There is a script in `src/scripts` that will remove all files with the `.bmp`, `.jpeg`, or `.png` extension from the uploads directory.
+- Warning: If you change the `UPLOAD_DIR` environment variable, **This will remove any files with the mentioned image extensions** whether it was uploaded by this service or not.
+- You can run this script via `npm run empty-uploads`
