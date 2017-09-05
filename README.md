@@ -42,4 +42,12 @@ Navigate to `localhost:3000/debug/app-vars` to view relevant environment and app
 ### Emptying Images from Upload Directory
 There is a script in `src/scripts` that will remove all files with the `.bmp`, `.jpeg`, or `.png` extension from the uploads directory.
 - Warning: If you change the `UPLOAD_DIR` environment variable, **This will remove any files with the mentioned image extensions** whether it was uploaded by this service or not.
-- You can run this script via `npm run empty-uploads`
+- Running on your local machine: 
+  - `npm run empty-uploads`
+- Running on a Docker Container:
+  1. List running Docker containers and get the container id of the entry with a name like "fsphotos_fs-photos_1":
+      - `docker ps`
+  1. Attach to the container in interactive mode to be able to execute commands
+      - `docker attach -it <CONTAINER_ID>`
+  2. Run the script:
+      - `npm run empty-uploads`
