@@ -11,3 +11,5 @@ ADD . /app
 
 # Install node deps for each app
 RUN npm install --quiet
+
+CMD ['npm', 'run', 'prod']
