@@ -5,8 +5,7 @@ services:
     image: fs-photos:test
     command: npm run prod
     ports:
-      - '3000:3000'
+      - '${PORT:-3000}:${PORT:-3000}'
     environment:
-      PORT: '3000'
-      UPLOAD_DIR: 'uploads'
-
+      PORT: '${PORT:-3000}'
+      UPLOAD_DIR: 'app/uploads'

@@ -8,7 +8,7 @@
   },
   "scripts": {
     "clean": "rm -rf coverage .nyc_output node_modules",
-    "dev": "STORAGE_PORT=3001 FILTER_PORT=3002 nodemon ./src/bin/www",
+    "dev": "nodemon ./src/bin/www",
     "empty-uploads": "node ./src/scripts/emptyImagesInUploadDir.js",
     "lint": "eslint",
     "prod": "node ./src/bin/www",
