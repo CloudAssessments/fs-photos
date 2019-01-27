@@ -1,0 +1,9 @@
+Git
+bitbucket
+jenkins
+jenkins with docker
+kubernetes
+python
+aws
+
+
