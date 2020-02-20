@@ -50,4 +50,4 @@ There is a script in `src/scripts` that will remove all files with the `.bmp`, `
   1. Attach to the container in interactive mode to be able to execute commands
       - `docker attach -it <CONTAINER_ID>`
   2. Run the script:
-      - `npm run empty-uploads`
+      - `npm run empty-uploads`be sure to have your ssh key set up and that your public key located in .ssh folder
